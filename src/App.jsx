@@ -1,4 +1,90 @@
 import { useState, useEffect } from 'react';
+import {
+  LayoutDashboard,
+  Thermometer,
+  Bug,
+  Users,
+  Settings,
+  LogOut,
+  Home,
+  Bell,
+  Activity,
+  Zap,
+  ShieldAlert,
+  Cpu,
+  ChevronDown,
+  ChevronUp,
+  TrendingUp,
+  Droplet,
+  Wind,
+  Sun,
+  Layers
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
+  PieChart,
+  Pie,
+  LineChart,
+  Line,
+  Legend,
+  RadialBarChart,
+  RadialBar
+} from 'recharts';
+
+// Componente Reutilizable para Tarjetas de Métricas
+const StatCard = ({ label, value, icon: Icon, trend, color }) => (
+  <motion.div 
+    whileHover={{ y: -5 }}
+    className="bg-white/70 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/20 shadow-sm hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 group cursor-pointer"
+  >
+    <div className="flex justify-between items-start mb-4">
+      <div className={`p-4 rounded-2xl ${color} bg-opacity-10 text-emerald-600 group-hover:scale-110 transition-transform duration-500`}>
+        <Icon size={24} />
+      </div>
+      {trend && (
+        <span className={`text-[10px] font-black px-3 py-1 rounded-full flex items-center gap-1 ${trend > 0 ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
+          <TrendingUp size={10} className={trend < 0 ? 'rotate-180' : ''} />
+          {Math.abs(trend)}%
+        </span>
+      )}
+    </div>
+    <p className="text-[10px] uppercase text-gray-500 font-black tracking-widest">{label}</p>
+    <h3 className="text-3xl font-black text-gray-900 mt-1">{value}</h3>
+  </motion.div>
+);
+
+const energyData = [
+  { name: '00h', value: 30 }, { name: '04h', value: 50 },
+  { name: '08h', value: 45 }, { name: '12h', value: 95 },
+  { name: '16h', value: 70 }, { name: '20h', value: 85 }, { name: '23h', value: 40 },
+];
+
+const tempData = [
+  { name: '00h', value: 18 }, { name: '04h', value: 16 },
+  { name: '08h', value: 22 }, { name: '12h', value: 28 },
+  { name: '16h', value: 30 }, { name: '20h', value: 24 }, { name: '23h', value: 19 },
+];
+
+const nutrientData = [
+  { name: '00h', val: 120 }, { name: '04h', val: 110 }, { name: '08h', val: 350 },
+  { name: '12h', val: 480 }, { name: '16h', val: 400 }, { name: '20h', val: 250 }, { name: '23h', val: 150 },
+];
+
+const deviceHealthData = [
+  { name: 'Operativos', value: 85, fill: '#10b981' },
+  { name: 'Standby', value: 10, fill: '#6366f1' },
+  { name: 'Falla', value: 5, fill: '#ef4444' },
+];
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -579,9 +665,9 @@ function App() {
             {/* BOTÓN HOME */}
             <button 
               onClick={() => setIsDashboardVisible(false)}
-              className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all font-bold text-lg ${activeModule === 'home' ? 'bg-white text-[#031c06] shadow-lg' : 'hover:bg-[#043b05]'}`}
+              className={`w-full flex items-center gap-3 p-4 rounded-2xl transition-all font-bold ${activeModule === 'home' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-emerald-100 hover:bg-emerald-500/10'}`}
             >
-              <span>🏠</span> HOME (App principal)
+              <Home className="w-5 h-5" /> HOME
             </button>
 
             {/* SECCIONES DEL MENÚ */}
@@ -592,23 +678,23 @@ function App() {
                   onClick={() => toggleModule('general')}
                   className="w-full flex justify-between items-center px-3 py-2 text-sm font-black text-[#71cc49] uppercase tracking-wider hover:bg-[#043b05]/50 rounded-lg"
                 >
-                  Módulo General
-                  <span className="text-xs">{expandedModules['general'] ? '▲' : '▼'}</span>
+                  <div className="flex items-center gap-2"><LayoutDashboard className="w-4 h-4" /> Módulo General</div>
+                  {expandedModules['general'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
                 {expandedModules['general'] && (
                   <ul className="mt-2 space-y-1 text-base text-green-100">
                     <li 
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'estado_invernaderos' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'estado_invernaderos' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('estado_invernaderos')}
-                    ><span>📊</span> Estado Invernaderos</li>
+                    ><Activity className="w-4 h-4 text-emerald-400" /> Estado Invernaderos</li>
                     <li 
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'dispositivos_activos' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'dispositivos_activos' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('dispositivos_activos')}
-                    ><span>🔌</span> Dispositivos Activos</li>
+                    ><Cpu className="w-4 h-4 text-emerald-400" /> Dispositivos Activos</li>
                     <li 
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'alertas_recientes' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'alertas_recientes' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('alertas_recientes')}
-                    ><span>🔔</span> Alertas Recientes</li>
+                    ><Bell className="w-4 h-4 text-emerald-400" /> Alertas Recientes</li>
                   </ul>
                 )}
               </div>
@@ -619,15 +705,15 @@ function App() {
                   onClick={() => toggleModule('monitoreo')}
                   className="w-full flex justify-between items-center px-3 py-2 text-sm font-black text-[#71cc49] uppercase tracking-wider hover:bg-[#043b05]/50 rounded-lg"
                 >
-                  Monitoreo Ambiental
-                  <span className="text-xs">{expandedModules['monitoreo'] ? '▲' : '▼'}</span>
+                  <div className="flex items-center gap-2"><Thermometer className="w-4 h-4" /> Monitoreo</div>
+                  {expandedModules['monitoreo'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
                 {expandedModules['monitoreo'] && (
                   <ul className="mt-2 space-y-1 text-base text-green-100">
                     <li 
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'monitoreo_general' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'monitoreo_general' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('monitoreo_general')}
-                    ><span>🌡️</span> Monitoreo General</li>
+                    ><Droplet className="w-4 h-4 text-emerald-400" /> Monitoreo General</li>
                   </ul>
                 )}
               </div>
@@ -638,16 +724,16 @@ function App() {
                   onClick={() => toggleModule('invernaderos')}
                   className="w-full flex justify-between items-center px-3 py-2 text-sm font-black text-[#71cc49] uppercase tracking-wider hover:bg-[#043b05]/50 rounded-lg"
                 >
-                  Gestión Invernaderos
-                  <span className="text-xs">{expandedModules['invernaderos'] ? '▲' : '▼'}</span>
+                  <div className="flex items-center gap-2"><Home className="w-4 h-4" /> Invernaderos</div>
+                  {expandedModules['invernaderos'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
                 {expandedModules['invernaderos'] && (
                   <ul className="mt-2 space-y-1 text-base text-green-100">
                     <li 
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'gestion_central_invernaderos' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'gestion_central_invernaderos' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('gestion_central_invernaderos')}
                     >
-                      <span>🏠</span> Gestión Central de Invernaderos
+                      <Settings className="w-4 h-4 text-emerald-400" /> Gestión Central
                     </li>
                   </ul>
                 )}
@@ -659,16 +745,16 @@ function App() {
                   onClick={() => toggleModule('plagas')}
                   className="w-full flex justify-between items-center px-3 py-2 text-sm font-black text-[#71cc49] uppercase tracking-wider hover:bg-[#043b05]/50 rounded-lg"
                 >
-                  Detección de Plagas
-                  <span className="text-xs">{expandedModules['plagas'] ? '▲' : '▼'}</span>
+                  <div className="flex items-center gap-2"><Bug className="w-4 h-4" /> Plagas</div>
+                  {expandedModules['plagas'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
                 {expandedModules['plagas'] && (
                   <ul className="mt-2 space-y-1 text-base text-green-100">
                     <li
-                      className={`p-2 rounded-lg cursor-pointer flex gap-2 ${activeModule === 'gestor_riesgos' ? 'bg-[#207b25] font-bold' : 'hover:bg-[#043b05]'}`}
+                      className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-colors ${activeModule === 'gestor_riesgos' ? 'bg-white/10 text-white font-bold' : 'hover:bg-white/5'}`}
                       onClick={() => setActiveModule('gestor_riesgos')}
                     >
-                      <span>🛡️</span> Gestor de Riesgos
+                      <ShieldAlert className="w-4 h-4 text-emerald-400" /> Gestor de Riesgos
                     </li>
                   </ul>
                 )}
@@ -696,9 +782,9 @@ function App() {
             {/* CERRAR SESIÓN */}
             <button 
               onClick={() => { setIsLoggedIn(false); setUserRole('user'); }}
-              className="w-full mt-8 p-3 bg-red-600/20 text-red-400 rounded-xl hover:bg-red-600 hover:text-white transition-all font-bold text-xs uppercase"
+              className="w-full mt-8 p-4 bg-red-500/10 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2"
             >
-              Cerrar Sesión
+              <LogOut className="w-4 h-4" /> Cerrar Sesión
             </button>
           </nav>
           </div>
@@ -715,41 +801,48 @@ function App() {
             </div>
           </header>
 
-          <div className="bg-white rounded-3xl shadow-xl p-8 min-h-[500px] border border-gray-100">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeModule}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="bg-white rounded-[40px] shadow-sm p-10 min-h-[600px] border border-gray-100"
+            >
             {activeModule === 'home' && <div className="text-center py-20 text-gray-400 font-bold uppercase tracking-widest">Seleccione un módulo para gestionar</div>}
             {activeModule === 'estado_invernaderos' && (
               <div className="grid grid-cols-12 gap-6 animate-fadeIn">
                 {/* PANEL IZQUIERDO (Sidebar de Datos) */}
                 <div className="col-span-3 space-y-6">
                   <div className="bg-gray-50 p-5 rounded-3xl border border-gray-200">
-                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-4 tracking-widest">Condiciones Actuales</h3>
+                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-4 tracking-widest">Sensores en Vivo</h3>
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { label: 'Aire', val: '22°C' },
-                        { label: 'Humedad', val: '65%' },
-                        { label: 'Suelo', val: '45%' },
-                        { label: 'Luz', val: '1,200 lx' }
+                        { label: 'Temp. Aire', val: '22°C', icon: <Wind size={12}/> },
+                        { label: 'Humedad', val: '65%', icon: <Droplet size={12}/> },
+                        { label: 'VPD Suelo', val: '1.2 kPa', icon: <Layers size={12}/> },
+                        { label: 'Luz Solar', val: '850 W/m²', icon: <Sun size={12}/> }
                       ].map((item, i) => (
                         <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-start justify-between min-h-[80px]">
-                          <span className="text-[10px] uppercase text-gray-500 font-black tracking-tight">{item.label}</span>
+                          <span className="text-[10px] uppercase text-gray-500 font-black tracking-tight flex items-center gap-1">{item.icon} {item.label}</span>
                           <span className="text-2xl font-black text-gray-900 leading-none">{item.val}</span>
                         </div>
                       ))}
                     </div>
-                    <button className="w-full mt-5 py-4 bg-gray-900 text-white text-[10px] font-black uppercase rounded-2xl hover:bg-black transition-all shadow-lg">
-                      Ver Reporte Detallado
+                    <button className="w-full mt-5 py-4 bg-emerald-600 text-white text-[10px] font-black uppercase rounded-2xl hover:bg-emerald-700 transition-all shadow-lg">
+                      Optimizar Riego
                     </button>
                   </div>
 
                   <div className="bg-gray-50 p-5 rounded-3xl border border-gray-200">
-                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-3 tracking-widest text-left">Consumo de Energía</h3>
+                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-3 tracking-widest text-left">Nivel de Tanque Agua</h3>
                     <div className="flex justify-center items-baseline gap-1 mb-3">
-                      <span className="text-3xl font-black text-[#031c06]">56.46</span>
-                      <span className="text-xs font-bold text-[#207b25] uppercase">Kw</span>
+                      <span className="text-3xl font-black text-[#031c06]">1,250</span>
+                      <span className="text-xs font-bold text-[#207b25] uppercase">Litros</span>
                     </div>
                     <div className="h-4 w-full bg-gray-200 rounded-full overflow-hidden flex shadow-inner">
-                      <div className="h-full bg-[#207b25]" style={{ width: '65%' }}></div>
-                      <div className="h-full bg-[#99d578]" style={{ width: '35%' }}></div>
+                      <div className="h-full bg-blue-500" style={{ width: '82%' }}></div>
                     </div>
                   </div>
 
@@ -805,35 +898,47 @@ function App() {
                 {/* PANEL DERECHO (Métricas y Energía) */}
                 <div className="col-span-3 space-y-6">
                   <div className="bg-gray-50 p-6 rounded-3xl border border-gray-200">
-                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-8 tracking-widest text-center">Métricas de Crecimiento</h3>
-                    <div className="grid grid-cols-1 gap-8">
-                      {[
-                        { label: 'CO₂', val: '420', unit: 'ppm', color: 'text-[#207b25]', perc: 70 },
-                        { label: 'pH Suelo', val: '6.8', unit: 'ph', color: 'text-[#71cc49]', perc: 45 }
-                      ].map((m, i) => (
-                        <div key={i} className="relative flex flex-col items-center">
-                          <svg className="w-32 h-20"><path d="M 10 70 A 40 40 0 0 1 118 70" fill="none" stroke="#e5e7eb" strokeWidth="12" strokeLinecap="round"/><path d="M 10 70 A 40 40 0 0 1 118 70" fill="none" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeDasharray="170" strokeDashoffset={170 * (1 - m.perc/100)} className={m.color}/></svg>
-                          <div className="mt-[-25px] text-center">
-                            <span className="text-xl font-black block">{m.val}</span>
-                            <span className="text-[9px] font-black uppercase text-gray-400">{m.label} ({m.unit})</span>
-                          </div>
-                        </div>
-                      ))}
+                    <h3 className="text-[10px] font-black uppercase text-gray-400 mb-4 tracking-widest text-center">Balance Químico Suelo</h3>
+                    <div className="h-48 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadialBarChart cx="50%" cy="50%" innerRadius="30%" outerRadius="100%" barSize={10} data={[
+                          { name: 'pH', value: 68, fill: '#10b981' },
+                          { name: 'CO2', value: 85, fill: '#059669' },
+                          { name: 'EC', value: 45, fill: '#34d399' }
+                        ]}>
+                          <RadialBar minAngle={15} background clockWise dataKey="value" cornerRadius={5} />
+                          <Tooltip 
+                            contentStyle={{ borderRadius: '12px', border: 'none', fontSize: '10px', fontWeight: 'bold' }}
+                          />
+                        </RadialBarChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <div className="flex justify-center gap-4 mt-2">
+                      <div className="flex items-center gap-1 text-[8px] font-black uppercase text-gray-500"><span className="w-2 h-2 rounded-full bg-[#10b981]"></span> pH</div>
+                      <div className="flex items-center gap-1 text-[8px] font-black uppercase text-gray-500"><span className="w-2 h-2 rounded-full bg-[#059669]"></span> CO2</div>
+                      <div className="flex items-center gap-1 text-[8px] font-black uppercase text-gray-500"><span className="w-2 h-2 rounded-full bg-[#34d399]"></span> EC</div>
                     </div>
                   </div>
 
                   <div className="bg-gray-50 p-6 rounded-3xl border border-gray-200 flex-grow">
                     <div className="flex justify-between items-center mb-6">
-                      <h3 className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Generación / Hora</h3>
+                      <h3 className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Inyección Nutrientes (mL)</h3>
                       <div className="flex bg-gray-200 p-1 rounded-xl">
-                        <button className="text-[8px] font-black uppercase px-3 py-1 bg-white rounded-lg shadow-sm">Alm</button>
-                        <button className="text-[8px] font-black uppercase px-3 py-1 text-gray-500">Eng</button>
+                        <button className="text-[8px] font-black uppercase px-3 py-1 bg-white rounded-lg shadow-sm">Diario</button>
+                        <button className="text-[8px] font-black uppercase px-3 py-1 text-gray-500">Ciclo</button>
                       </div>
                     </div>
-                    <div className="flex items-end justify-between h-48 px-2">
-                      {[30, 50, 45, 80, 60, 95, 70, 100, 85, 40, 55, 75].map((h, i) => (
-                        <div key={i} className="w-2 bg-[#207b25] rounded-full transition-all hover:bg-[#71cc49]" style={{ height: `${h}%`, opacity: h/100 + 0.1 }}></div>
-                      ))}
+                    <div className="h-48 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={nutrientData}>
+                          <Bar dataKey="val" radius={[4, 4, 0, 0]}>
+                            {nutrientData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#10b981' : '#059669'} />
+                            ))}
+                          </Bar>
+                          <Tooltip cursor={{fill: 'transparent'}} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }} />
+                        </BarChart>
+                      </ResponsiveContainer>
                     </div>
                     <div className="flex justify-between mt-4 text-[8px] font-black text-gray-400 uppercase"><span>00h</span><span>12h</span><span>23h</span></div>
                   </div>
@@ -1087,63 +1192,69 @@ function App() {
                   <div className="col-span-9 grid grid-cols-2 gap-6">
                     {/* 2. ACTIVIDAD (Barras) */}
                     <div className="bg-gray-50 rounded-3xl border border-gray-200 p-6">
-                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest">Actividad de Uso (24h)</h3>
-                      <div className="flex items-end justify-between h-32 px-4">
-                        {currentDevice.actividad.map((val, i) => (
-                          <div key={i} className="flex flex-col items-center gap-2 w-full">
-                            <div className="w-4 bg-[#207b25] rounded-t-sm transition-all duration-500" style={{ height: `${val}%` }}></div>
-                            <span className="text-[8px] font-bold text-gray-400 uppercase">{i * 4}h</span>
-                          </div>
-                        ))}
+                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest">Disponibilidad del Nodo (24h)</h3>
+                      <div className="h-32 w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={currentDevice.actividad.map((v, i) => ({ time: `${i*4}h`, val: v }))}>
+                            <Bar dataKey="val" fill="#10b981" radius={[2, 2, 0, 0]} />
+                            <XAxis dataKey="time" hide />
+                            <Tooltip cursor={{fill: 'transparent'}} contentStyle={{ borderRadius: '10px', border: 'none', fontSize: '10px' }} />
+                          </BarChart>
+                        </ResponsiveContainer>
                       </div>
+                      <div className="flex justify-between mt-2 text-[8px] font-bold text-gray-400 uppercase"><span>00h</span><span>12h</span><span>24h</span></div>
                     </div>
 
                     {/* 3. TOTAL DE CONSUMO (Líneas) */}
                     <div className="bg-gray-50 rounded-3xl border border-gray-200 p-6">
-                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest">Total de Consumo</h3>
+                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest">Histórico de Conectividad</h3>
                       <div className="relative h-32 w-full">
-                        <svg className="w-full h-full overflow-visible">
-                          <polyline
-                            fill="none"
-                            stroke="#71cc49"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            points={currentDevice.consumo.map((v, i) => `${(i * 100) / 6},${100 - v}`).join(' ')}
-                            className="transition-all duration-700"
-                            style={{ vectorEffect: 'non-scaling-stroke' }}
-                            viewBox="0 0 100 100"
-                            preserveAspectRatio="none"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-end justify-between text-[8px] font-bold text-gray-400 uppercase pt-2">
-                          <span>Min</span><span>Prom</span><span>Max</span>
-                        </div>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart data={energyData}>
+                            <Line 
+                              type="monotone" 
+                              dataKey="value" 
+                              stroke="#10b981" 
+                              strokeWidth={3} 
+                              dot={false} 
+                            />
+                            <Tooltip 
+                              contentStyle={{ borderRadius: '12px', border: 'none', fontSize: '10px' }}
+                              labelStyle={{ display: 'none' }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
                     </div>
 
-                    {/* 4. PRODUCTIVIDAD (Torta) */}
+                    {/* 4. SALUD DEL SISTEMA (Pie Chart) */}
                     <div className="col-span-2 bg-gray-50 rounded-3xl border border-gray-200 p-6 flex flex-col items-center">
-                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest w-full">Productividad del Sistema</h3>
+                      <h3 className="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest w-full text-center">Estado General de Nodos</h3>
                       <div className="flex items-center gap-12">
-                        <div className="relative w-32 h-32">
-                          <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
-                            <circle cx="18" cy="18" r="16" fill="none" stroke="#e5e7eb" strokeWidth="4" />
-                            <circle 
-                              cx="18" cy="18" r="16" fill="none" stroke="#207b25" strokeWidth="4" 
-                              strokeDasharray={`${currentDevice.productividad.ef}, 100`} 
-                              className="transition-all duration-1000"
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="text-xl font-black text-gray-800">{currentDevice.productividad.ef}%</span>
-                            <span className="text-[8px] font-bold text-gray-400 uppercase">Eficacia</span>
-                          </div>
+                        <div className="w-40 h-40">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                              <Pie
+                                data={deviceHealthData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={40}
+                                outerRadius={60}
+                                paddingAngle={5}
+                                dataKey="value"
+                              >
+                                {deviceHealthData.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                                ))}
+                              </Pie>
+                              <Tooltip />
+                            </PieChart>
+                          </ResponsiveContainer>
                         </div>
                         <div className="grid grid-cols-1 gap-3">
-                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-[#207b25] rounded-full"></span> Eficiencia Operativa</div>
-                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-gray-300 rounded-full"></span> Tiempo de Inactividad</div>
-                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-orange-400 rounded-full"></span> Mantenimiento</div>
+                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-[#10b981] rounded-full"></span> Operativos</div>
+                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-[#6366f1] rounded-full"></span> Standby</div>
+                          <div className="flex items-center gap-2 text-xs font-bold text-gray-600"><span className="w-3 h-3 bg-[#ef4444] rounded-full"></span> Falla Crítica</div>
                         </div>
                       </div>
                     </div>
@@ -1239,15 +1350,32 @@ function App() {
                   {/* Gráfica de Tendencia */}
                   <div className="col-span-2 bg-white p-8 rounded-[40px] border border-gray-100 shadow-xl">
                     <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-8">Fluctuación de Temperatura (Últimas 6h)</h3>
-                    <div className="relative h-48 w-full">
-                      <svg className="w-full h-full overflow-visible" viewBox="0 0 100 40">
-                        <path d="M 0 30 Q 20 10, 40 25 T 80 5 T 100 20" fill="none" stroke="#ef4444" strokeWidth="3" strokeLinecap="round" />
-                        <path d="M 0 30 Q 20 10, 40 25 T 80 5 T 100 20 V 40 H 0 Z" fill="url(#gradTemp)" opacity="0.1" />
-                        <defs>
-                          <linearGradient id="gradTemp" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#ef4444" /><stop offset="100%" stopColor="transparent" /></linearGradient>
-                        </defs>
-                        {[0, 25, 50, 75, 100].map(x => <circle key={x} cx={x} cy={x === 80 ? 5 : (x === 40 ? 25 : 20)} r="1.5" fill="#ef4444" />)}
-                      </svg>
+                    <div className="h-48 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={tempData}>
+                          <defs>
+                            <linearGradient id="colorAlert" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#fef2f2" />
+                          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#9ca3af'}} />
+                          <YAxis hide domain={['auto', 'auto']} />
+                          <Tooltip 
+                            contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                            itemStyle={{ color: '#ef4444', fontWeight: 'bold' }}
+                          />
+                          <Area 
+                            type="monotone" 
+                            dataKey="value" 
+                            stroke="#ef4444" 
+                            strokeWidth={3} 
+                            fillOpacity={1} 
+                            fill="url(#colorAlert)" 
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
                     </div>
                     <div className="flex justify-between mt-6 text-[10px] font-black text-gray-300 uppercase">
                       <span>10:00 AM</span><span>12:00 PM</span><span>02:00 PM</span><span>04:00 PM</span>
@@ -1546,18 +1674,46 @@ function App() {
                       <button className="pb-4 text-xl font-bold text-gray-300 hover:text-gray-500 transition-colors tracking-tighter">Esta Semana</button>
                     </div>
 
-                    {/* Fila de Pronóstico */}
-                    <div className="flex justify-between gap-3 overflow-x-auto pb-4">
-                      {['Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom', 'Lun'].map((day, i) => (
-                        <div key={i} className="bg-white rounded-[25px] p-5 flex flex-col items-center gap-3 shadow-sm border border-white min-w-[90px] hover:shadow-md transition-shadow">
-                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{day}</span>
-                          <span className="text-3xl">⛅</span>
-                          <div className="flex flex-col items-center leading-none">
-                            <span className="text-base font-black text-[#1A1A1A]">{24+i}°</span>
-                            <span className="text-xs font-bold text-gray-300 mt-1">{18+i}°</span>
-                          </div>
-                        </div>
-                      ))}
+                    {/* Gráfico de Tendencia de Temperatura */}
+                    <div className="bg-white rounded-[40px] p-8 shadow-sm border border-white h-[350px] w-full">
+                      <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6">Tendencia de Temperatura Diaria</h4>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={tempData}>
+                          <defs>
+                            <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                          <XAxis 
+                            dataKey="name" 
+                            axisLine={false} 
+                            tickLine={false} 
+                            tick={{fontSize: 10, fontWeight: 700, fill: '#9ca3af'}}
+                            dy={10}
+                          />
+                          <YAxis hide domain={['auto', 'auto']} />
+                          <Tooltip 
+                            contentStyle={{ 
+                              borderRadius: '20px', 
+                              border: 'none', 
+                              boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', 
+                              padding: '12px' 
+                            }}
+                            itemStyle={{ fontSize: '12px', fontWeight: '900', color: '#059669' }}
+                          />
+                          <Area 
+                            type="monotone" 
+                            dataKey="value" 
+                            stroke="#10b981" 
+                            strokeWidth={4}
+                            fillOpacity={1} 
+                            fill="url(#colorTemp)" 
+                            animationDuration={2000}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
                     </div>
 
                     {/* Cuadrícula de Métricas Críticas */}
@@ -1761,7 +1917,8 @@ function App() {
                 </div>
               </div>
             )}
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
     );
