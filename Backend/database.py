@@ -1,8 +1,12 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "postgresql://postgres:CALDERON@127.0.0.1:5432/AGROINDUSTRIAL"
+load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+DATABASE_URL = os.environ['DATABASE_URL']
 
 engine = create_engine(
     DATABASE_URL, 
