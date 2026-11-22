@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE dispositivo ADD COLUMN IF NOT EXISTS config_electronica JSON;
+COMMIT;

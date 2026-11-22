@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Manual de <strong>Aporte Ingenieril</strong></title>
+<style>
+:root{color-scheme:dark;--fondo:#000800;--verde:#00ff00;--amarillo:#ffbf00;--cabecera:#004000}
+*{box-sizing:border-box}body{margin:0;background:var(--fondo);color:var(--verde);font:20px/1.5 "Courier New",Courier,monospace}
+main{border:1px solid var(--verde);margin:14px auto 24px;padding:20px;max-width:1200px;width:calc(100% - 32px)}
+header{text-align:center;padding:0 0 4px}h1{display:table;margin:0 auto 20px;padding:0 0 13px;border-bottom:2px solid var(--verde);font-size:24px;letter-spacing:4px;color:var(--verde)}
+header>p{margin:0;font-size:17px;line-height:27px}header>p:first-of-type{margin-top:16px}header>p:first-of-type strong{font-weight:700}
+h2{background:var(--cabecera);border-left:5px solid var(--verde);border-right:5px solid var(--verde);padding:14px 20px;margin:40px 0 30px;text-align:center;text-transform:uppercase;font-size:20px;line-height:1.5;letter-spacing:2px;color:var(--verde)}
+h3{color:var(--amarillo);font-size:21px;line-height:1.5;margin:26px 0;letter-spacing:.1px}p{margin:14px 0}strong{font-weight:700}ul{padding-left:32px;margin:14px 0}li{padding-left:0;margin:6px 0}
+.creditos{border:2px solid var(--amarillo);border-radius:10px;background:#001500;padding:24px;text-align:center;margin:28px 0 0;font-size:17px;line-height:25px}
+.creditos h3{margin:0 0 10px;font-size:21px;letter-spacing:.6px}.creditos .cargo{font-style:italic;margin:8px 0 16px}.creditos p:last-child{margin-bottom:0}
+.advertencia{background:#240300;color:#ff8580;border:2px solid #ff0000;border-radius:10px;padding:18px 22px;margin:30px 0}.advertencia h3{color:#ff8580;font-size:18px;margin:0 0 14px}.advertencia ul{margin-bottom:0}
+.panel{border:1px dashed var(--verde);border-radius:6px;background:#001000;padding:24px;margin:30px 0}.panel h3{margin:24px 0 14px}.panel p:last-child{margin-bottom:0}
+.tarjeta{border:1px solid var(--verde);border-left:7px solid var(--amarillo);border-radius:0 10px 10px 0;overflow:hidden;background:#001000;margin:30px 0}
+.tarjeta h3{margin:0;padding:11px 18px;background:var(--cabecera);color:var(--verde);font-size:20px;text-transform:uppercase}.tarjeta .contenido{padding:14px 24px 24px}.tarjeta p{margin:6px 0 16px}.tarjeta ul{margin:4px 0 16px}
+.tabla{margin:24px 0;overflow-x:auto}table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:15px;line-height:1.5}th,td{border:1px solid var(--verde);padding:13px 12px;vertical-align:top;text-align:left;overflow-wrap:break-word}
+thead th{background:var(--cabecera);font:700 14px/22px Georgia,"Times New Roman",serif}tbody th{font-weight:400}th:first-child{width:25%}.tabla.general th:first-child{width:30%}.tabla.tres th:first-child{width:27%}.tabla.tres th:nth-child(2){width:32%}
+pre{border:1px solid #004000;padding:26px 14px 48px;background:#000;font:18px/1.5 "Courier New",monospace;white-space:pre-wrap;text-align:center;margin:14px 0}
+.formulario{border:2px solid var(--amarillo);border-radius:10px;background:#001900;padding:32px 30px;margin:38px 0}.formulario h3{text-align:center;letter-spacing:2px;margin:22px 0 28px}
+label{display:block;font-size:17px;font-weight:700;margin:24px 0 8px}textarea,input{display:block;width:100%;padding:12px;border:1px solid var(--verde);border-radius:5px;background:#000;color:var(--verde);font:17px/1.5 "Courier New",monospace}textarea{resize:vertical}textarea::placeholder,input::placeholder{color:#888;opacity:1}textarea:focus,input:focus{outline:2px solid var(--amarillo);outline-offset:2px}
+.firmas{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-top:40px;font-size:16px}.firmas p{margin:4px 0}.firmas strong{display:block;border-top:1px solid var(--verde);padding-top:12px}.confirmacion{display:flex;gap:10px;align-items:start;font-weight:400;font-size:15px}.confirmacion input{width:18px;height:18px;margin-top:3px;accent-color:var(--verde)}
+footer{border-top:1px solid #003000;margin-top:50px;padding-top:24px;text-align:center;font-size:13px;line-height:23px}footer p{margin:0 0 12px}footer .cita{color:var(--amarillo)}
+@media(min-width:1000px){table{font-size:17px}.tabla.ejemplo tbody th{font-weight:700}}
+@media(max-width:600px){body{font-size:17px}main{width:calc(100% - 20px);padding:16px}h1{font-size:21px;letter-spacing:2px}h2{font-size:18px;padding:12px}h3{font-size:19px}.panel,.creditos{padding:18px}.tarjeta .contenido{padding:16px}.tarjeta h3{font-size:17px}.formulario{padding:20px 16px}table{min-width:540px}header>p{font-size:15px}pre{font-size:15px}.firmas{grid-template-columns:1fr;gap:36px}}
+@media print{body{background:white;color:black;font-size:11pt}main{border:0;width:100%;margin:0;padding:0}h1,h2,h3,.creditos h3,.tarjeta h3{color:black}h2,thead th,.tarjeta h3{background:#eee}h2,h3{break-after:avoid}.creditos,.panel,.tarjeta,.formulario,.advertencia{background:white;color:black;border-color:#555}tr{break-inside:avoid}th,td,pre,textarea,input{border-color:#555;background:white;color:black}.tabla{overflow:visible}table{min-width:0}footer .cita{color:black}}
+</style></head><body><main>
+<header><h1>MANUAL DE APORTE INGENIERIL</h1>
+<p><strong>INGENIERÍA DE SOFTWARE 2</strong> | GUÍA PARA PROYECTOS INTEGRADORES CON IA, REDES NEURONALES Y MACHINE LEARNING</p>
+<p>Cómo identificar, redactar y justificar el aporte técnico y social de tu proyecto</p>
+<div class="creditos"><h3>ING. ÁLVARO GABRIEL CORONEL CENTELLAS</h3>
+<p class="cargo">DOCENTE DE INGENIERÍA DE SOFTWARE 2</p>
+<p>Material académico elaborado para uso exclusivo de los estudiantes de la asignatura</p></div>
+</header>
+<h2>1. Información General</h2>
+<div class="tabla general"><table><thead><tr><th scope="col">ASPECTO</th><th scope="col">DETALLE</th></tr></thead><tbody><tr><th scope="row">Documento</th><td>Guía metodológica para redactar el <strong>Aporte Ingenieril</strong> en Proyectos Integradores</td></tr><tr><th scope="row">Dirigido a</th><td>Estudiantes de Ingeniería de Software 2</td></tr><tr><th scope="row">Docente responsable</th><td>Ing. Álvaro Gabriel Coronel Centellas</td></tr><tr><th scope="row">Áreas involucradas</th><td>Inteligencia Artificial, Redes Neuronales, Machine Learning, Visión por Computadora, PNL, Sistemas Expertos, IoT, Ciberseguridad</td></tr><tr><th scope="row">Propósito</th><td>Que el estudiante comprenda qué es el aporte ingenieril, de dónde se obtiene y cómo redactarlo con bases técnicas y sociales</td></tr><tr><th scope="row">Evaluación</th><td>El docente exige que cada estudiante justifique su contribución al tema y a la sociedad</td></tr></tbody></table></div>
+<div class="advertencia"><h3>⚠️ ADVERTENCIA PREVIA — LEER ANTES DE EMPEZAR</h3><ul>
+<li><strong>El aporte ingenieril NO</strong> es la cantidad de horas trabajadas ni la cantidad de código escrito.</li>
+<li><strong>El aporte ingenieril NO</strong> es un resumen del proyecto ni una lista de herramientas usadas.</li>
+<li><strong>El aporte ingenieril SÍ</strong> es la <strong>contribución original, técnica y social</strong> que tu sistema hace al problema que resuelve.</li>
+<li>Debes poder responder: ¿Qué tiene de nuevo, útil y valioso lo que yo hice?</li>
+</ul></div><h2>2. ¿Qué es el <strong>Aporte Ingenieril</strong>?</h2>
+<div class="panel"><h3>🔍 Definición clara</h3>
+<p>El <strong>Aporte Ingenieril</strong> es la <strong>contribución original, técnica y social</strong> que un estudiante realiza al resolver un problema real mediante un sistema de ingeniería. No se mide por horas ni por líneas de código, sino por el <strong>valor diferencial</strong> que su solución aporta al tema investigado y a la sociedad.</p>
+<p>En palabras simples: <strong>es lo que tu sistema hace que antes no se hacía, o que se hacía mal, o que se hacía de forma manual.</strong></p>
+</div><h3>📌 Los 3 componentes del <strong>Aporte Ingenieril</strong></h3>
+<div class="tabla tres"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">PREGUNTA QUE RESPONDE</th><th scope="col">EJEMPLO GENÉRICO</th></tr></thead><tbody><tr><th scope="row">1. Aporte al Tema (Técnico-Científico)</th><td>¿Qué mejora, innova o resuelve mi sistema que otros no han resuelto?</td><td>Predecir la demanda de productos con IA en lugar de usar promedios históricos</td></tr><tr><th scope="row">2. Aporte a la Sociedad (Social-Económico)</th><td>¿A quién beneficia mi sistema y cómo mejora su vida o su economía?</td><td>Reducir quiebres de stock en tiendas de barrio, evitando pérdidas a pequeños comerciantes</td></tr><tr><th scope="row">3. Aporte Metodológico (Cómo lo hice)</th><td>¿Cómo construí la solución y por qué mi enfoque técnico es válido?</td><td>Usar una red neuronal LSTM para series temporales porque captura patrones no lineales</td></tr></tbody></table></div>
+<h2>3. Fórmula Conceptual del <strong>Aporte Ingenieril</strong></h2>
+<div class="panel"><h3>🧮 Ecuación para redactar tu aporte</h3>
+<p>No es una fórmula matemática, es una <strong>ecuación conceptual</strong> que debes completar con tu proyecto:</p>
+<pre>APORTE INGENIERIL =
+(Problema Real Identificado)
++ (Solución Técnica Innovadora con IA/ML/RNA)
++ (Beneficio Medible a la Sociedad/Empresa)
++ (Justificación Metodológica)</pre>
+<p>Cada uno de estos 4 elementos debe estar claramente redactado y justificado en tu documento.</p>
+</div><h3>📝 Preguntas guía para completar cada elemento</h3>
+<article class="tarjeta"><h3>ELEMENTO 1 — Problema Real Identificado</h3><div class="contenido">
+<ul><li>¿Cuál es el problema concreto que resuelve mi sistema?</li>
+<li>¿Dónde ocurre? (empresa, comunidad, sector)</li>
+<li>¿A quién afecta y cómo?</li>
+<li>¿Qué se hace actualmente para resolverlo y por qué no es suficiente?</li>
+</ul><p><strong>Ejemplo:</strong> &quot;Los almacenes de productos de compra no saben cuánto pedir ni cuándo, generando quiebres de stock y pérdidas por vencimiento.&quot;</p>
+</div></article>
+<article class="tarjeta"><h3>ELEMENTO 2 — Solución Técnica Innovadora</h3><div class="contenido">
+<ul><li>¿Qué hace mi sistema que antes no se hacía?</li>
+<li>¿Qué tecnología de IA/ML/RNA estoy usando?</li>
+<li>¿Por qué esa tecnología y no otra?</li>
+<li>¿Qué integro que antes no se integraba? (ej: IA + IoT + base de datos)</li>
+</ul><p><strong>Ejemplo:</strong> &quot;Usa IA para predecir la demanda futura basándose en historial, estacionalidad y tendencias, y genera órdenes de compra automáticas.&quot;</p>
+</div></article>
+<article class="tarjeta"><h3>ELEMENTO 3 — Beneficio Medible a la Sociedad</h3><div class="contenido">
+<ul><li>¿A quién beneficia mi sistema? (stakeholders)</li>
+<li>¿Cómo se mide ese beneficio? (métricas, porcentajes, número de personas)</li>
+<li>¿Qué mejora en la vida o economía de esas personas?</li>
+</ul><p><strong>Ejemplo:</strong> &quot;Beneficia a 50 tiendas de la zona, reduciendo quiebres de stock en 40% y pérdidas por vencimiento en 25%.&quot;</p>
+</div></article>
+<article class="tarjeta"><h3>ELEMENTO 4 — Justificación Metodológica</h3><div class="contenido">
+<ul><li>¿Qué metodología de desarrollo usé? (CRISP-DM, Scrum, etc.)</li>
+<li>¿Qué técnicas de IA/ML/RNA usé y por qué?</li>
+<li>¿Cómo validé que mi modelo funciona? (métricas: precisión, recall, F1, RMSE)</li>
+<li>¿Cómo se integra la IA con el resto del sistema?</li>
+</ul><p><strong>Ejemplo:</strong> &quot;Usé un modelo de series temporales con LSTM porque captura patrones no lineales que la regresión tradicional no detecta. Validé con RMSE de 0.12.&quot;</p>
+</div></article>
+<h2>4. Ejemplos de <strong>Aporte Ingenieril</strong> en Proyectos con IA</h2>
+<h3>🤖 Ejemplo 1: Sistema de Control de Inventario con IA</h3>
+<div class="tabla ejemplo"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">REDACCIÓN DEL APORTE</th></tr></thead><tbody><tr><th scope="row">Problema Real</th><td>Los almacenes de productos de compra no saben cuánto pedir ni cuándo, generando quiebres de stock y pérdidas por vencimiento.</td></tr><tr><th scope="row">Solución Técnica</th><td>Sistema que usa redes neuronales LSTM para predecir la demanda futura basándose en historial de ventas, estacionalidad y tendencias del mercado. Genera órdenes de compra automáticas.</td></tr><tr><th scope="row">Beneficio Social</th><td>Beneficia a 50 tiendas de la zona, reduciendo quiebres de stock en 40% y pérdidas por vencimiento en 25%. Mejora la disponibilidad de productos para los clientes finales.</td></tr><tr><th scope="row">Justificación Metodológica</th><td>Se usó CRISP-DM para el desarrollo del modelo. Se eligió LSTM porque captura dependencias temporales de largo plazo. Validación con RMSE de 0.12 y MAPE de 8%.</td></tr></tbody></table></div>
+<h3>🧠 Ejemplo 2: Clasificación de Enfermedades con Redes Neuronales</h3>
+<div class="tabla ejemplo"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">REDACCIÓN DEL APORTE</th></tr></thead><tbody><tr><th scope="row">Problema Real</th><td>En zonas rurales, los médicos no especialistas no pueden diagnosticar con precisión enfermedades dermatológicas, retrasando tratamientos.</td></tr><tr><th scope="row">Solución Técnica</th><td>Sistema de visión por computadora con CNN (Redes Neuronales Convolucionales) que clasifica imágenes de lesiones cutáneas en 7 categorías de enfermedades.</td></tr><tr><th scope="row">Beneficio Social</th><td>Beneficia a 200 pacientes mensuales en zonas rurales, permitiendo detección temprana y derivación oportuna a especialistas. Reduce tiempo de diagnóstico de 15 días a 2 minutos.</td></tr><tr><th scope="row">Justificación Metodológica</th><td>Se usó transfer learning con ResNet-50 preentrenada en ImageNet. Se aplicó aumento de datos para mejorar generalización. Precisión del 94.3% en conjunto de prueba.</td></tr></tbody></table></div>
+<h3>📝 Ejemplo 3: Análisis de Sentimientos con PNL</h3>
+<div class="tabla ejemplo"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">REDACCIÓN DEL APORTE</th></tr></thead><tbody><tr><th scope="row">Problema Real</th><td>Las empresas no pueden procesar manualmente miles de reseñas de clientes para detectar problemas de satisfacción.</td></tr><tr><th scope="row">Solución Técnica</th><td>Sistema de Procesamiento de Lenguaje Natural (PNL) que clasifica reseñas en positivas, negativas y neutras usando transformers (BERT).</td></tr><tr><th scope="row">Beneficio Social</th><td>Beneficia a 30 empresas locales, permitiéndoles detectar problemas de producto en tiempo real y mejorar la satisfacción del cliente en 35%.</td></tr><tr><th scope="row">Justificación Metodológica</th><td>Se usó BERT multilingüe con fine-tuning en 10,000 reseñas etiquetadas. Métricas: F1-score de 0.91, precisión de 0.92, recall de 0.90.</td></tr></tbody></table></div>
+<h3>🔐 Ejemplo 4: Detección de Intrusiones con Machine Learning</h3>
+<div class="tabla ejemplo"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">REDACCIÓN DEL APORTE</th></tr></thead><tbody><tr><th scope="row">Problema Real</th><td>Las redes locales de pequeñas empresas son vulnerables a ataques informáticos porque no tienen sistemas de detección de intrusiones.</td></tr><tr><th scope="row">Solución Técnica</th><td>Sistema de detección de intrusiones (IDS) basado en Random Forest y SVM que analiza tráfico de red en tiempo real y clasifica paquetes como normales o maliciosos.</td></tr><tr><th scope="row">Beneficio Social</th><td>Beneficia a 15 PYMES locales, protegiendo sus datos y evitando pérdidas económicas por ataques. Reduce falsos positivos en 60% respecto a IDS tradicionales.</td></tr><tr><th scope="row">Justificación Metodológica</th><td>Se usó el dataset NSL-KDD para entrenamiento. Se compararon 5 algoritmos, seleccionando Random Forest por su mejor relación precisión/velocidad. Precisión del 97.8%.</td></tr></tbody></table></div>
+<h3>🌾 Ejemplo 5: Predicción de Rendimiento Agrícola con ML</h3>
+<div class="tabla ejemplo"><table><thead><tr><th scope="col">COMPONENTE</th><th scope="col">REDACCIÓN DEL APORTE</th></tr></thead><tbody><tr><th scope="row">Problema Real</th><td>Los pequeños agricultores no pueden predecir el rendimiento de sus cultivos, lo que les impide planificar ventas y evitar pérdidas.</td></tr><tr><th scope="row">Solución Técnica</th><td>Sistema que usa regresión con Gradient Boosting para predecir rendimiento agrícola basándose en datos climáticos, tipo de suelo y prácticas de cultivo.</td></tr><tr><th scope="row">Beneficio Social</th><td>Beneficia a 80 familias agricultoras, permitiéndoles planificar ventas con 3 meses de anticipación y reducir pérdidas en 30%.</td></tr><tr><th scope="row">Justificación Metodológica</th><td>Se usó validación cruzada de 10 folds. Se compararon 4 modelos, seleccionando Gradient Boosting por mejor R² (0.89). Datos de 5 años de 3 regiones.</td></tr></tbody></table></div>
+<h2>5. Cómo Redactar tu <strong>Aporte Ingenieril</strong></h2>
+<article class="tarjeta"><h3>PASO 5.1 — Identifica el problema real</h3><div class="contenido">
+<p>Escribe en 2-3 líneas el problema concreto que resuelve tu sistema. No uses generalidades. Sé específico: ¿dónde ocurre?, ¿a quién afecta?, ¿qué consecuencias tiene?</p>
+</div></article>
+<article class="tarjeta"><h3>PASO 5.2 — Describe tu solución técnica</h3><div class="contenido">
+<p>Explica qué hace tu sistema que antes no se hacía. Menciona la tecnología de IA/ML/RNA que usas y por qué la elegiste. No basta con decir &quot;usé IA&quot;, debes decir <strong>qué tipo de IA y por qué.</strong></p>
+</div></article>
+<article class="tarjeta"><h3>PASO 5.3 — Cuantifica el beneficio social</h3><div class="contenido">
+<p>Identifica a quién beneficia tu sistema y cómo se mide ese beneficio. Usa números: porcentajes, número de personas, ahorro económico, tiempo reducido, etc.</p>
+</div></article>
+<article class="tarjeta"><h3>PASO 5.4 — Justifica tu metodología</h3><div class="contenido">
+<p>Explica cómo construiste la solución: metodología de desarrollo, técnicas de IA, métricas de validación. Esto demuestra que tu aporte no es casualidad, sino producto de un proceso ingenieril.</p>
+</div></article>
+<article class="tarjeta"><h3>PASO 5.5 — Redacta el aporte completo</h3><div class="contenido">
+<p>Une los 4 elementos en un párrafo coherente de 1-2 páginas. Usa el formato: &quot;El presente proyecto aporta... mediante... beneficiando a... validado con...&quot;</p>
+</div></article>
+<h2>6. Errores Comunes al Redactar el Aporte</h2>
+<div class="tabla tres"><table><thead><tr><th scope="col">ERROR</th><th scope="col">POR QUÉ ESTÁ MAL</th><th scope="col">CÓMO CORREGIRLO</th></tr></thead><tbody><tr><th scope="row">Decir &quot;usé IA&quot; sin especificar</th><td>No demuestra conocimiento técnico</td><td>Especificar: &quot;usé una red neuronal LSTM para series temporales&quot;</td></tr><tr><th scope="row">No cuantificar el beneficio</th><td>No se puede evaluar el impacto real</td><td>Incluir métricas: &quot;reduce 40% los quiebres de stock&quot;</td></tr><tr><th scope="row">Confundir aporte con resumen</th><td>El resumen describe el proyecto, el aporte justifica su valor</td><td>Enfocarse en el <strong>valor diferencial</strong>, no en la descripción</td></tr><tr><th scope="row">No justificar la elección de tecnología</th><td>Parece que se eligió al azar</td><td>Explicar por qué esa tecnología es la adecuada para ese problema</td></tr><tr><th scope="row">No mencionar validación</th><td>No se sabe si el sistema funciona</td><td>Incluir métricas: precisión, recall, F1, RMSE, etc.</td></tr></tbody></table></div>
+<h2>7. Bibliografía de Respaldo</h2>
+<div class="panel bibliografia"><h3>📚 Fuentes académicas para citar en tu aporte</h3><ul>
+<li>Manual de Frascati (OCDE): Define qué es investigación, desarrollo e innovación tecnológica.</li>
+<li>Manual de Oslo (OCDE): Guía para medir la innovación en proyectos.</li>
+<li>CRISP-DM: Metodología estándar para proyectos de minería de datos y ML.</li>
+<li>COCOMO II (Barry Boehm): Modelo de estimación de esfuerzo en proyectos de software.</li>
+<li>Puntos de Función (Allan Albrecht, IFPUG): Métrica estándar para medir tamaño funcional de software.</li>
+<li>Engineering for Social Justice: Marco para evaluar impacto social de proyectos técnicos.</li>
+<li>Human-Centered Design (IDEO): Metodología para justificar el valor social de una solución.</li>
+<li>Artificial Intelligence in Supply Chain Management (Min, 2010).</li>
+<li>Machine Learning for Demand Forecasting (Carbonneau et al., 2008).</li>
+<li>Deep Learning (Goodfellow, Bengio, Courville, 2016): Base teórica de redes neuronales.</li>
+<li>Pattern Recognition and Machine Learning (Bishop, 2006): Base teórica de ML.</li>
+</ul></div><h2>8. Formulario: Redacta tu Propio <strong>Aporte Ingenieril</strong></h2>
+<div class="formulario"><h3>📝 APORTE INGENIERIL DEL ESTUDIANTE</h3>
+<label for="campo-144">Nombre completo del estudiante:</label><input id="campo-144" type="text" placeholder="Escribe tu nombre aquí...">
+<label for="campo-146">Título del proyecto integrador:</label><input id="campo-146" type="text" placeholder="Ej: Sistema de control de inventario con IA...">
+<label for="campo-148">Tema elegido (área de IA/ML/RNA):</label><input id="campo-148" type="text" placeholder="Ej: Redes neuronales LSTM para predicción de demanda...">
+<label for="campo-150">1. Problema Real Identificado (¿Qué problema resuelve tu sistema? ¿A quién afecta?):</label><textarea id="campo-150" rows="5" placeholder="Escribe aquí el problema concreto que resuelve tu proyecto..."></textarea>
+<label for="campo-153">2. Solución Técnica Innovadora (¿Qué hace tu sistema que antes no se hacía? ¿Qué tecnología de IA/ML/RNA usas y por qué?):</label><textarea id="campo-153" rows="5" placeholder="Describe tu solución técnica con detalle..."></textarea>
+<label for="campo-156">3. Beneficio Medible a la Sociedad (¿A quién beneficia? ¿Cómo se mide ese beneficio? Usa números):</label><textarea id="campo-156" rows="5" placeholder="Cuantifica el impacto social o económico de tu sistema..."></textarea>
+<label for="campo-159">4. Justificación Metodológica (¿Qué metodología usaste? ¿Qué técnicas de IA? ¿Cómo validaste tu modelo? Métricas):</label><textarea id="campo-159" rows="5" placeholder="Explica cómo construiste y validaste tu solución..."></textarea>
+<label for="campo-162">5. Redacción Final del <strong>Aporte Ingenieril</strong> (Une los 4 elementos en un párrafo coherente):</label><textarea id="campo-162" rows="5" placeholder="El presente proyecto aporta... mediante... beneficiando a... validado con..."></textarea>
+<label for="campo-165">Bibliografía utilizada (mínimo 3 fuentes):</label><textarea id="campo-165" rows="4" placeholder="1. ...
+2. ...
+3. ..."></textarea>
+<div class="firmas"><div><strong>Firma del Estudiante</strong><label class="confirmacion"><input type="checkbox">Confirmo que he comprendido y redactado mi aporte ingenieril</label></div><div><strong>Fecha</strong><input aria-label="Fecha" type="date"></div></div>
+</div><h2>9. Notas Finales</h2><div class="panel notas">
+<ul><li>✅ El aporte ingenieril es la <strong>contribución original, técnica y social</strong> de tu proyecto.</li>
+<li>✅ Se compone de 4 elementos: Problema Real + Solución Técnica + Beneficio Social + Justificación Metodológica.</li>
+<li>✅ No se mide por horas ni por líneas de código, sino por el <strong>valor diferencial</strong> de tu solución.</li>
+<li>✅ Debes poder responder: ¿Qué tiene de nuevo, útil y valioso lo que yo hice?</li>
+<li>✅ Usa métricas concretas: precisión, recall, F1, RMSE, MAPE, porcentajes de mejora, número de beneficiarios.</li>
+<li>✅ Cita bibliografía académica que respalde tu enfoque técnico y social.</li>
+<li>✅ Revisa la sección de errores comunes antes de entregar tu aporte.</li>
+<li>✅ Completa el formulario de la sección 8 y fírmalo para confirmar que comprendiste.</li>
+</ul></div><h2>10. Créditos Académicos</h2><div class="creditos"><h3>ING. ÁLVARO GABRIEL CORONEL CENTELLAS</h3><p class="cargo">DOCENTE DE INGENIERÍA DE SOFTWARE 2</p>
+<p>Material académico elaborado para uso exclusivo de los estudiantes de la asignatura Ingeniería de Software 2. Prohibida su reproducción total o parcial sin autorización del docente.</p>
+<p>Este documento forma parte del material de apoyo para la elaboración de Proyectos Integradores con enfoque en Inteligencia Artificial, Redes Neuronales y Machine Learning.</p>
+</div><footer><p>MANUAL DE APORTE INGENIERIL EN PROYECTOS DE INGENIERÍA DE SOFTWARE</p>
+<p>INGENIERÍA DE SOFTWARE 2 | DOCENTE: ING. ÁLVARO GABRIEL CORONEL CENTELLAS</p>
+<p>Basado en metodologías CRISP-DM, COCOMO II, Puntos de Función y Manuales OCDE</p>
+<p class="cita">&quot;La ingeniería no es solo construir, es aportar valor con conocimiento.&quot;</p>
+<p>© Material académico - Ing. Álvaro Gabriel Coronel Centellas - Ingeniería de Software 2</p>
+</footer></main></body></html>
